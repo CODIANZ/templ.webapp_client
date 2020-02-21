@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="js/dist/client.bundle.js" type="text/javascript"></script>
+</head>
+<body>
+  <h2>client session</h2>
+  <span id="session_id"></span>
+  <a id="server" target="_blank">server</a>
+  <h2>hello / farewell</h2>
+  <button id="hello">hello</button>
+  <button id="farewell">farewell</button>
+  <h2>message</h2>
+  event: <input id="message_event" value="message"><br>
+  body: <br>
+  <textarea id="message_body" type="text" value="body">{}</textarea><br>
+  <button id="emit_unsolicited_message">emit unsolicited</button>
+  <button id="emit_solicited_message">emit solicited message</button>
+
+  <button id="update_pending_solicited_messages">update pending solicited message</button>
+
+  <ul id="pending_solicited_messages">
+    <li class="list_item template" style="display: none;">
+      <div>
+        index : <input class="index" disabled="disabled"></index><br>
+        event: <input id="message event" value="message"><br>
+        message:<br>
+        <textarea class="message body" disabled="disabled"></textarea><br>
+        event: <input id="response event" value="message"><br>
+        response:<br>
+        <textarea class="response body">{}</textarea><br>
+        <button class="emit">emit solicited response</button>
+      </div>
+    </li>
+  </ul>
+
+  <h2>log</h2>
+  <textarea id="log"></textarea>
+
+</body>
+</html>
