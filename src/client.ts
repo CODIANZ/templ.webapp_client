@@ -5,6 +5,8 @@ import { ExtURL } from "./ExtURL";
 import { RxUtil } from "./RxUtil";
 import { from } from "rxjs";
 import { map } from "rxjs/operators";
+import "bootstrap";
+import "bootstrap/scss/bootstrap.scss";
 
 const args = new ExtURL(document.URL);
 const host = args.getQueryParameter("host");
@@ -16,6 +18,7 @@ $(document).ready(()=>{
     g_socket = SyncSocketIO.connect(ss);
 
     $("#session_id").text(g_socket.SessionId);
+    document.title = `client: ${g_socket.SessionId}`;
 
     $("#server")
       .attr("href", `server.html?session_id=${g_socket.SessionId}&host=${host}`);

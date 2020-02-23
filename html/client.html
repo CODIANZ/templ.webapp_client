@@ -1,41 +1,127 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>client</title>
   <script src="js/dist/client.bundle.js" type="text/javascript"></script>
 </head>
 <body>
-  <h2>client session</h2>
-  <span id="session_id"></span>
-  <a id="server" target="_blank">server</a>
-  <h2>hello / farewell</h2>
-  <button id="hello">hello</button>
-  <button id="farewell">farewell</button>
-  <h2>message</h2>
-  event: <input id="message_event" value="message"><br>
-  body: <br>
-  <textarea id="message_body" type="text" value="body">{}</textarea><br>
-  <button id="emit_unsolicited_message">emit unsolicited</button>
-  <button id="emit_solicited_message">emit solicited message</button>
+<div class="container-fluid">
 
-  <button id="update_pending_solicited_messages">update pending solicited message</button>
+  <h1>client session</h2>
 
-  <ul id="pending_solicited_messages">
-    <li class="list_item template" style="display: none;">
-      <div>
-        index : <input class="index" disabled="disabled"></index><br>
-        event: <input id="message event" value="message"><br>
-        message:<br>
-        <textarea class="message body" disabled="disabled"></textarea><br>
-        event: <input id="response event" value="message"><br>
-        response:<br>
-        <textarea class="response body">{}</textarea><br>
-        <button class="emit">emit solicited response</button>
+    <div class="row m-2"><div class="col-12">
+    <div class="card bg-light">
+    <div id="session_id" class="card-header">push hello to connect server</div>
+    </div>
+  </div></div>
+
+  <div class="row m-2"><div class="col-12">
+    <a id="server" class="btn btn-info" target="_blank">server</a>
+  </div></div>
+
+  <h2 class="border-bottom mt-4">hello / farewell</h2>
+  <div class="row m-2">
+    <div class="col-2">
+      <button id="hello" class="btn btn-success">hello</button>
+    </div>
+    <div class="col-2">
+      <button id="farewell" class="btn btn-danger">farewell</button>
+    </div>
+  </div>
+
+  <h2 class="border-bottom mt-4">message</h2>
+
+  <div class="row m-2"><div class="col-12">
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text">event</span>
+      </div>            
+      <input id="message_event" class="form-control" value="message">
+    </div>
+  </div></div>
+       
+  <div class="row m-2"><div class="col-12">
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text">body</span>
+      </div>            
+      <textarea id="message_body" class="form-control" value="body">{}</textarea>
+    </div>
+  </div></div>
+
+  <div class="row m-2">
+    <div class="col-3">
+      <button id="emit_unsolicited_message" class="btn btn-primary">emit unsolicited</button>
+    </div>
+    <div class="col-3">
+      <button id="emit_solicited_message" class="btn btn-primary">emit solicited message</button>
+    </div>
+  </div>
+
+  <h2 class="border-bottom mt-4">response</h2>
+  
+  <div class="row m-2">
+    <div class="col-12">
+      <button id="update_pending_solicited_messages" class="btn btn-info">update pending solicited message</button>
+    </div>
+    <div class="col-12">
+      <div id="pending_solicited_messages" class="list-group">
+        <div class="list_item template list-group-item" style="display: none;">
+
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">index</span>
+            </div>            
+            <input class="index form-control" disabled="disabled"></index>
+          </div>
+
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">event</span>
+            </div>
+            <input class="message event form-control" disabled="disabled"></index>
+          </div>
+
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">message</span>
+            </div>
+            <textarea class="message body form-control" disabled="disabled"></textarea>
+          </div>
+
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">event</span>
+            </div>
+            <input class="response event form-control" value="message"></index>
+          </div>
+
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">message</span>
+            </div>
+            <textarea class="response body form-control">{}</textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <button class="emit btn btn-primary">emit solicited response</button>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </li>
-  </ul>
+    </div>
+  </div>
 
-  <h2>log</h2>
-  <textarea id="log"></textarea>
+  <h2 class="border-bottom mt-4">log</h2>
 
+  <div class="row m-2">
+    <div class="col-12">
+      <textarea id="log" class="form-control"></textarea>
+    </div>
+  </div>
+
+</div>
 </body>
 </html>

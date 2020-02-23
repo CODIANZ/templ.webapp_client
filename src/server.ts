@@ -2,6 +2,8 @@ import { ExtURL } from "./ExtURL";
 import { RxUtil } from "./RxUtil";
 import { mergeMap, map } from "rxjs/operators";
 import { from } from "rxjs";
+import "bootstrap";
+import "bootstrap/scss/bootstrap.scss";
 
 const args = new ExtURL(document.URL);
 const host = args.getQueryParameter("host");
@@ -10,6 +12,7 @@ const session_id = args.getQueryParameter("session_id");
 
 $(document).ready(()=>{
   $("#session_id").text(session_id!);
+  document.title = `server: ${session_id}`;
 
   $("#emit_unsolicited_message").on("click", ()=>{
     RxUtil.doSubscribe("emit_unsolicited_message", RxUtil.postJson(`http://${host}/debugger`, {
