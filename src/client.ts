@@ -116,7 +116,7 @@ function doUpdatePendingSolicitedMessages(){
             from(g_socket.emitSolicitedResponse(
               solicited_message_index,
               $(".response.event", li).val() as string,
-              JSON.parse($(".response.body").val() as string)
+              JSON.parse($(".response.body", li).val() as string)
             ))
             .pipe(tap(()=>{
               doUpdatePendingSolicitedMessages();
