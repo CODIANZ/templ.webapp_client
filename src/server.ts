@@ -82,7 +82,7 @@ function doUpdatePendingSolicitedMessages(){
           message: {
             index: solicited_message_index,
             event: $(".response.event", li).val() as string,
-            body: JSON.parse($(".response.body").val() as string)
+            body: JSON.parse($(".response.body", li).val() as string)
           }
         }), log);
       });
