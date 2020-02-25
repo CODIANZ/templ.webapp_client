@@ -2,6 +2,8 @@ import { ExtURL } from "./ExtURL";
 import { RxUtil } from "./RxUtil";
 import { mergeMap, map } from "rxjs/operators";
 import { from } from "rxjs";
+import "bootstrap";
+import "bootstrap/scss/bootstrap.scss";
 
 const args = new ExtURL(document.URL);
 const host = args.getQueryParameter("host");
@@ -10,6 +12,7 @@ const session_id = args.getQueryParameter("session_id");
 
 $(document).ready(()=>{
   $("#session_id").text(session_id!);
+  document.title = `server: ${session_id}`;
 
   $("#emit_unsolicited_message").on("click", ()=>{
     RxUtil.doSubscribe("emit_unsolicited_message", RxUtil.postJson(`http://${host}/debugger`, {
@@ -19,7 +22,7 @@ $(document).ready(()=>{
         event: $("#message_event").val() as string,
         body: JSON.parse($("#message_body").val() as string)
       }
-    }), undefined, log);
+    }), log);
   });
 
   $("#emit_solicited_message").on("click", ()=>{
@@ -30,7 +33,7 @@ $(document).ready(()=>{
         event: $("#message_event").val() as string,
         body: JSON.parse($("#message_body").val() as string)
       }
-    }), undefined, log);
+    }), log);
   });
 
   $("#update_pending_solicited_messages").on("click", ()=>{
@@ -41,7 +44,7 @@ $(document).ready(()=>{
     RxUtil.doSubscribe("goodbye", RxUtil.postJson(`http://${host}/debugger`, {
       command: "goodbye",
       session_id: session_id
-    }), undefined, log);
+    }), log);
   });
 
   doUpdatePendingSolicitedMessages();
@@ -81,7 +84,7 @@ function doUpdatePendingSolicitedMessages(){
             event: $(".response.event", li).val() as string,
             body: JSON.parse($(".response.body").val() as string)
           }
-        }), undefined, log);
+        }), log);
       });
 
       return li;

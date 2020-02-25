@@ -1,6 +1,8 @@
 import { RxUtil } from "./RxUtil";
 import { mergeMap, map } from 'rxjs/operators';
 import { from } from "rxjs";
+import "bootstrap";
+import "bootstrap/scss/bootstrap.scss";
 
 const host = "localhost:50555";
 
@@ -9,6 +11,7 @@ $(document).ready(()=>{
   $("#update").on("click", ()=>{
     doUpdate();
   });
+  doUpdate();
 });
 
 function doUpdate() {
@@ -21,9 +24,12 @@ function doUpdate() {
       return from(x);
     }))
     .pipe(map((x)=>{
-      const li = $("<li></li>");
-      li.append(`<a href="server.html?host=${host}&session_id=${x}" target="_blank">${x}</a>`);
-      return li;
+      return $("<a></a>")
+        .attr("href", `server.html?host=${host}&session_id=${x}`)
+        .attr("target", "_blank")
+        .addClass("list-group-item")
+        .addClass("list-group-item-action")
+        .text(x as string);
     }))
     .pipe(map((x)=>{
       $("#socket_ids").append(x);

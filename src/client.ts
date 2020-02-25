@@ -4,7 +4,9 @@ import { SyncSocketIO } from "syncsocketio"
 import { ExtURL } from "./ExtURL";
 import { RxUtil } from "./RxUtil";
 import { from } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
+import "bootstrap";
+import "bootstrap/scss/bootstrap.scss";
 
 const args = new ExtURL(document.URL);
 const host = args.getQueryParameter("host");
@@ -16,6 +18,7 @@ $(document).ready(()=>{
     g_socket = SyncSocketIO.connect(ss);
 
     $("#session_id").text(g_socket.SessionId);
+    document.title = `client: ${g_socket.SessionId}`;
 
     $("#server")
       .attr("href", `server.html?session_id=${g_socket.SessionId}&host=${host}`);
@@ -33,18 +36,18 @@ $(document).ready(()=>{
   
     $("#farewell").on("click", ()=>{
       if(g_socket){
-        log("farewell");
-        g_socket.emitUnsolicitedMessage("farewell")
-        .then(()=>{
-          if(g_socket){
-            g_socket.goodbye();
-          }
-          g_socket = undefined;
-          log("farewell -> success");
-        })
-        .catch((err)=>{
-          log("farewell -> error");
-        });
+        RxUtil.doSubscribe
+        (
+          "farewell",
+          from(g_socket.emitUnsolicitedMessage("farewell"))
+          .pipe(map(()=>{
+            if(g_socket){
+              g_socket.goodbye();
+            }
+            g_socket = undefined;
+          }))
+          , log
+        );
       }
     });
   });
@@ -54,17 +57,15 @@ $(document).ready(()=>{
       log(`socket == null`);
       return;
     }
-    log("emitUnsolicitedMessage");
-    g_socket.emitUnsolicitedMessage(
-      $("#message_event").val() as string,
-      JSON.parse($("#message_body").val() as string)
-    )
-    .then((x)=>{
-      log("emitUnsolicitedMessage -> success");
-    })
-    .catch((err)=>{
-      log("emitUnsolicitedMessage -> error");
-    });
+    RxUtil.doSubscribe
+    (
+      "emitUnsolicitedMessage",
+      from(g_socket.emitUnsolicitedMessage(
+        $("#message_event").val() as string,
+        JSON.parse($("#message_body").val() as string)
+      ))
+      , log
+    );
   });
 
   $("#emit_solicited_message").on("click", ()=>{
@@ -72,17 +73,15 @@ $(document).ready(()=>{
       log(`[error] socket == null`);
       return;
     }
-    log("emitSolicitedMessageAndWaitResponse");
-    g_socket.emitSolicitedMessageAndWaitResponse(
-      $("#message_event").val() as string,
-      JSON.parse($("#message_body").val() as string)
-    )
-    .then((x)=>{
-      log("emitSolicitedMessageAndWaitResponse -> success");
-    })
-    .catch((err)=>{
-      log("emitSolicitedMessageAndWaitResponse -> error");
-    });
+    RxUtil.doSubscribe
+    (
+      "emitSolicitedMessageAndWaitResponse",
+      from(g_socket.emitSolicitedMessageAndWaitResponse(
+        $("#message_event").val() as string,
+        JSON.parse($("#message_body").val() as string)
+      ))
+      , log
+    );
   });
 
   $("#update_pending_solicited_messages").on("click", ()=>{
@@ -113,18 +112,17 @@ function doUpdatePendingSolicitedMessages(){
       $(".message.body", li).val(JSON.stringify(solicited_message_body, null, 1));
       $(".emit", li).on("click", ()=>{
         if(g_socket){
-          g_socket.emitSolicitedResponse(
-            solicited_message_index,
-            $(".response.event", li).val() as string,
-            JSON.parse($(".response.body").val() as string)
-          )
-          .then(()=>{
-            doUpdatePendingSolicitedMessages();
-          })
-          .catch((e)=>{
-            alert(JSON.stringify(e, null, 1));
-            doUpdatePendingSolicitedMessages();
-          });
+          RxUtil.doSubscribe("emitSolicitedResponse",
+            from(g_socket.emitSolicitedResponse(
+              solicited_message_index,
+              $(".response.event", li).val() as string,
+              JSON.parse($(".response.body").val() as string)
+            ))
+            .pipe(tap(()=>{
+              doUpdatePendingSolicitedMessages();
+            }))
+            , log
+          );
         }
       });
       return li;

@@ -1,19 +1,12 @@
 export namespace Util {
 
 export function errorToString(err: Error | string){
-  let s: string;
-  if(typeof err == "string"){
-    s = err;
+  if(err instanceof Error){
+    return JSON.stringify(err);
   }
   else{
-    if(err.message){
-      s = err.message;
-    }
-    else{
-      s = JSON.stringify(err, null, " ");
-    }
+    return anyToString(err);
   }
-  return s;
 }
 
 export function dateToString(date: Date, emptyStr: string = "(n/a)"){
@@ -49,6 +42,24 @@ export function dateNow() {
 
 export function setDebugDate(s: string) {
   debug_date = s;
+}
+
+export function anyToString(v: any){
+  switch(typeof v){
+    case "string":{
+      return `"${v as string}"`;
+    }
+    case "number":{
+      return `${v as number}`;
+    }
+    case "boolean":{
+      return `${(v as boolean) ? "true" : "false"}`;
+    }
+    case "undefined":{
+      return "undefined";
+    }
+  }
+  return (v == null) ? "null" : JSON.stringify(v, null, 1);
 }
 
 export function stringToDate(s: string) {
