@@ -3,21 +3,23 @@ import { Util } from "./Util";
 
 export namespace RxUtil {
 
-export function doSubscribe(s: string, o: Observable<any>, f?: (j: any) => void, l?: (s: string)=> void){
+export function doSubscribe(s: string, o: Observable<any>, l?: (s: string)=> void){
+  const index = function() {
+    const s = window.sessionStorage.getItem("doSubscribe-index");
+    const n = s ? parseInt(s) : 1;
+    window.sessionStorage.setItem("doSubscribe-index", `${n + 1}`);
+    return n;
+  }();
+
   const log = l ? l : (x: string) => console.log(x);
-  log(`${s} : subscribe`);
+  log(`[${s}:#${index}] start subscribe`);
   o.subscribe((j)=>{
-    if(f){
-      f(j);
-    }
-    else{
-      log(`${s} : next ${JSON.stringify(j, null, 1)}`);
-    };
+    log(`[${s}:#${index}] on next\n${Util.anyToString(j)}`);
   }, (err)=>{
-    log(`${s} : error ${Util.errorToString(err)}`);
+    log(`[${s}:#${index}] on error\n${Util.errorToString(err)}`);
     alert(`エラーが発生しました\n${Util.errorToString(err)}`);
   }, ()=>{
-    log(`${s} : completed`);
+    log(`[${s}:#${index}] on completed`);
   });
 }
 

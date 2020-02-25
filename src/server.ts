@@ -22,7 +22,7 @@ $(document).ready(()=>{
         event: $("#message_event").val() as string,
         body: JSON.parse($("#message_body").val() as string)
       }
-    }), undefined, log);
+    }), log);
   });
 
   $("#emit_solicited_message").on("click", ()=>{
@@ -33,7 +33,7 @@ $(document).ready(()=>{
         event: $("#message_event").val() as string,
         body: JSON.parse($("#message_body").val() as string)
       }
-    }), undefined, log);
+    }), log);
   });
 
   $("#update_pending_solicited_messages").on("click", ()=>{
@@ -44,7 +44,7 @@ $(document).ready(()=>{
     RxUtil.doSubscribe("goodbye", RxUtil.postJson(`http://${host}/debugger`, {
       command: "goodbye",
       session_id: session_id
-    }), undefined, log);
+    }), log);
   });
 
   doUpdatePendingSolicitedMessages();
@@ -84,7 +84,7 @@ function doUpdatePendingSolicitedMessages(){
             event: $(".response.event", li).val() as string,
             body: JSON.parse($(".response.body").val() as string)
           }
-        }), undefined, log);
+        }), log);
       });
 
       return li;
