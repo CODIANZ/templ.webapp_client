@@ -10,46 +10,47 @@ import "bootstrap/scss/bootstrap.scss";
 
 const args = new ExtURL(document.URL);
 const host = args.getQueryParameter("host");
+const session_id = args.getQueryParameter("session_id");
+
 let g_socket: SyncSocketIO | undefined;
 
 $(document).ready(()=>{
-  $("#hello").on("click", ()=>{
-    const ss = socketio(`${host}`);
-    g_socket = SyncSocketIO.connect(ss);
+  const ss = socketio(`${host}`);
+  g_socket = SyncSocketIO.connect(ss);
 
-    $("#session_id").text(g_socket.SessionId);
-    document.title = `client: ${g_socket.SessionId}`;
+  g_socket.emitUnsolicitedMessage("bindSockets", {
+    session_id: session_id
+  });
+  
+  $("#session_id").text(session_id!);
+  document.title = `server: ${session_id}`;
+  
+  g_socket.onUnsolicitedMessageAll((m)=>{
+    log(`onUnsolicitedMessageAll(${JSON.stringify(m, null, 1)})`);
+  });
 
-    $("#server")
-      .attr("href", `server.html?session_id=${g_socket.SessionId}&host=${host}`);
-  
-    g_socket.onUnsolicitedMessageAll((m)=>{
-      log(`onUnsolicitedMessageAll(${JSON.stringify(m, null, 1)})`);
-    });
-  
-    g_socket.onSolcitedMessageAll((m)=>{
-      log(`onSolcitedMessageAll(${JSON.stringify(m, null, 1)})`);
-      doUpdatePendingSolicitedMessages();
-    });
-  
-    $("#hello").prop("disabled", true);
-  
-    $("#farewell").on("click", ()=>{
-      if(g_socket){
-        RxUtil.doSubscribe
-        (
-          "farewell",
-          from(g_socket.emitUnsolicitedMessage("farewell"))
-          .pipe(map(()=>{
-            if(g_socket){
-              g_socket.goodbye();
-            }
-            g_socket = undefined;
-          }))
-          , log
-        );
-      }
-    });
+  g_socket.onSolcitedMessageAll((m)=>{
+    log(`onSolcitedMessageAll(${JSON.stringify(m, null, 1)})`);
+    doUpdatePendingSolicitedMessages();
+  });
+
+  $("#hello").prop("disabled", true);
+
+  $("#farewell").on("click", ()=>{
+    if(g_socket){
+      RxUtil.doSubscribe
+      (
+        "farewell",
+        from(g_socket.emitUnsolicitedMessage("farewell"))
+        .pipe(map(()=>{
+          if(g_socket){
+            g_socket.goodbye();
+          }
+          g_socket = undefined;
+        }))
+        , log
+      );
+    }
   });
 
   $("#emit_unsolicited_message").on("click", ()=>{

@@ -2,7 +2,11 @@ export namespace Util {
 
 export function errorToString(err: Error | string){
   if(err instanceof Error){
-    return JSON.stringify(err);
+    return JSON.stringify({
+      name: err.name,
+      message: err.message,
+      stack: err.stack
+    }, null, 1);
   }
   else{
     return anyToString(err);

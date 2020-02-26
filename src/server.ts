@@ -14,6 +14,9 @@ $(document).ready(()=>{
   $("#session_id").text(session_id!);
   document.title = `server: ${session_id}`;
 
+  $("#server_socket")
+    .attr("href", `server_socket.html?session_id=${session_id}&host=${host}`);
+
   $("#emit_unsolicited_message").on("click", ()=>{
     RxUtil.doSubscribe("emit_unsolicited_message", RxUtil.postJson(`http://${host}/debugger`, {
       command: "emit_unsolicited_message",

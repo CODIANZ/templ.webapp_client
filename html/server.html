@@ -15,6 +15,10 @@
     </div>
   </div></div>
 
+  <div class="row m-2"><div class="col-12">
+    <a id="server_socket" class="btn btn-info" target="_blank">bind server socket</a>
+  </div></div>
+
   <h2 class="border-bottom mt-4">goodbye</h2>
   <div class="row m-2"><div class="col-12">
     <button id="goodbye" class="btn btn-danger">goodbye</button>
@@ -37,7 +41,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text">body</span>
       </div>            
-      <textarea id="message_body" class="form-control" value="body">{}</textarea>
+      <textarea rows="10" id="message_body" class="form-control" value="body">{}</textarea>
     </div>
   </div></div>
 
@@ -69,30 +73,30 @@
 
           <div class="input-group mb-2">
             <div class="input-group-prepend">
-              <span class="input-group-text">event</span>
+              <span class="input-group-text">message.event</span>
             </div>
             <input class="message event form-control" disabled="disabled"></index>
           </div>
 
           <div class="input-group mb-2">
             <div class="input-group-prepend">
-              <span class="input-group-text">message</span>
+              <span class="input-group-text">message.body</span>
             </div>
-            <textarea class="message body form-control" disabled="disabled"></textarea>
+            <textarea rows="10" class="message body form-control" disabled="disabled"></textarea>
           </div>
 
           <div class="input-group mb-2">
             <div class="input-group-prepend">
-              <span class="input-group-text">event</span>
+              <span class="input-group-text">response.event</span>
             </div>
             <input class="response event form-control" value="message"></index>
           </div>
 
           <div class="input-group mb-2">
             <div class="input-group-prepend">
-              <span class="input-group-text">message</span>
+              <span class="input-group-text">response.message</span>
             </div>
-            <textarea class="response body form-control">{}</textarea>
+            <textarea rows="10" class="response body form-control">{}</textarea>
           </div>
 
           <div class="row">
@@ -110,7 +114,7 @@
 
   <div class="row m-2">
     <div class="col-12">
-      <textarea id="log" class="form-control"></textarea>
+      <textarea rows="10" id="log" class="form-control"></textarea>
     </div>
   </div>
 

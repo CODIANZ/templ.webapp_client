@@ -1,4 +1,4 @@
-import { Observable, from } from "rxjs";
+import { Observable, from, Observer } from "rxjs";
 import { Util } from "./Util";
 
 export namespace RxUtil {
@@ -17,7 +17,7 @@ export function doSubscribe(s: string, o: Observable<any>, l?: (s: string)=> voi
     log(`[${s}:#${index}] on next\n${Util.anyToString(j)}`);
   }, (err)=>{
     log(`[${s}:#${index}] on error\n${Util.errorToString(err)}`);
-    alert(`エラーが発生しました\n${Util.errorToString(err)}`);
+    alert(`Error:\n${Util.errorToString(err)}`);
   }, ()=>{
     log(`[${s}:#${index}] on completed`);
   });
@@ -32,6 +32,19 @@ export function postJson(url: string, data: any){
     contentType: "application/json",
     dataType: "json"
   }));
+}
+
+export function readySetGo<T>(ready: ()=>void, observable:Observable<T>): Observable<T>{
+  return Observable.create((observer: Observer<T>) =>{
+    observable.subscribe((v)=>{
+      observer.next(v);
+    }, (err) =>{
+      observer.error(err);
+    }, () =>{
+      observer.complete();
+    });
+    ready();
+  });
 }
 
 } /* namespace RxUtil */
