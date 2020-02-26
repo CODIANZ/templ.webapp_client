@@ -1,6 +1,6 @@
 import socketio from "socket.io-client";
 import { SyncSocketIO } from "syncsocketio"
-//import { SyncSocketIO } from "../../../syncsocketio/src/syncsocketio"
+//import { SyncSocketIO } from "../../syncsocketio/src/syncsocketio"
 import { ExtURL } from "./ExtURL";
 import { RxUtil } from "./RxUtil";
 import { from } from "rxjs";
@@ -25,12 +25,12 @@ $(document).ready(()=>{
   $("#session_id").text(session_id!);
   document.title = `server: ${session_id}`;
   
-  g_socket.onUnsolicitedMessageAll((m)=>{
-    log(`onUnsolicitedMessageAll(${JSON.stringify(m, null, 1)})`);
+  g_socket.onUnsolicitedMessageRegex(".*", (event, body)=>{
+    log(`onUnsolicitedMessageRegex:\n  - event: ${event}\n  - body: ${JSON.stringify(body, null, 1)})`);
   });
 
-  g_socket.onSolcitedMessageAll((m)=>{
-    log(`onSolcitedMessageAll(${JSON.stringify(m, null, 1)})`);
+  g_socket.onSolcitedMessageRegex(".*", (index, event, body)=>{
+    log(`onSolcitedMessageRegex:\n  - index: ${index}\n  - event: ${event}\n  - body: ${JSON.stringify(body, null, 1)}`);
     doUpdatePendingSolicitedMessages();
   });
 
