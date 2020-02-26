@@ -1,5 +1,11 @@
 # syncsocketio を使ったwebサーバへの接続を行うクライアント実装テンプレート
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/greenkeeperio/badges.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/codianz/templ.webapp_client.png?branch=master)](https://travis-ci.org/codianz/templ.webapp_client)
+[![Dependency Status](https://img.shields.io/david/codianz/templ.webapp_client.svg?style=flat-square)](https://david-dm.org/codianz/templ.webapp_client)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
 ## 概要
 
 このプロジェクトは syncsocketio を使ったwebサーバへの接続を行うクライアント側の実装テンプレートです。
