@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>client</title>
-  <script src="js/dist/client.bundle.js" type="text/javascript"></script>
+  <title>server</title>
+  <script src="js/dist/server_socket.bundle.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="container-fluid">
 
-  <h1>client session</h2>
-
-    <div class="row m-2"><div class="col-12">
-    <div class="card bg-light">
-    <div id="session_id" class="card-header">push hello to connect server</div>
-    </div>
-  </div></div>
+  <h1>server session</h1>
 
   <div class="row m-2"><div class="col-12">
-    <a id="server" class="btn btn-info" target="_blank">server</a>
+    <div class="card bg-light">
+    <div id="session_id" class="card-header"></div>
+    </div>
   </div></div>
 
-  <h2 class="border-bottom mt-4">hello / farewell</h2>
+  <h2 class="border-bottom mt-4">unbind (farewell)</h2>
   <div class="row m-2">
     <div class="col-2">
-      <button id="hello" class="btn btn-success">hello</button>
-    </div>
-    <div class="col-2">
-      <button id="farewell" class="btn btn-danger">farewell</button>
+      <button id="farewell" class="btn btn-danger">unbind (farewell)</button>
     </div>
   </div>
 
@@ -59,7 +52,7 @@
   </div>
 
   <h2 class="border-bottom mt-4">response</h2>
-  
+
   <div class="row m-2">
     <div class="col-12">
       <div id="pending_solicited_messages" class="list-group">

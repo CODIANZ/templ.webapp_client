@@ -5,10 +5,11 @@ module.exports = {
 //  mode: "development",  /* pakcage.json で --mode パラメータで指定 */
   
   entry:{
-    index:    "./src/index.ts",
-    client:   "./src/client.ts",
-    server:   "./src/server.ts",
-    api:      "./src/api.ts"
+    index:          "./src/index.ts",
+    client:         "./src/client.ts",
+    server:         "./src/server.ts",
+    server_socket:  "./src/server_socket.ts",
+    api:            "./src/api.ts"
   },
   
   module: {
