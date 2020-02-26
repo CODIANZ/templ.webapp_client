@@ -1,6 +1,6 @@
 import socketio from "socket.io-client";
 import { SyncSocketIO } from "syncsocketio"
-//import { SyncSocketIO } from "../../../syncsocketio/src/syncsocketio"
+//import { SyncSocketIO } from "../../syncsocketio/src/syncsocketio"
 import { ExtURL } from "./ExtURL";
 import { RxUtil } from "./RxUtil";
 import { from } from "rxjs";
@@ -23,15 +23,15 @@ $(document).ready(()=>{
     $("#server")
       .attr("href", `server.html?session_id=${g_socket.SessionId}&host=${host}`);
   
-    g_socket.onUnsolicitedMessageAll((m)=>{
-      log(`onUnsolicitedMessageAll(${JSON.stringify(m, null, 1)})`);
+    g_socket.onUnsolicitedMessageRegex(".*", (event, body)=>{
+      log(`onUnsolicitedMessageRegex:\n  - event: ${event}\n  - body: ${JSON.stringify(body, null, 1)})`);
     });
   
-    g_socket.onSolcitedMessageAll((m)=>{
-      log(`onSolcitedMessageAll(${JSON.stringify(m, null, 1)})`);
+    g_socket.onSolcitedMessageRegex(".*", (index, event, body)=>{
+      log(`onSolcitedMessageRegex:\n  - index: ${index}\n  - event: ${event}\n  - body: ${JSON.stringify(body, null, 1)}`);
       doUpdatePendingSolicitedMessages();
     });
-  
+      
     $("#hello").prop("disabled", true);
   
     $("#farewell").on("click", ()=>{
