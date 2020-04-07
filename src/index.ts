@@ -4,7 +4,7 @@ import { from } from "rxjs";
 import "bootstrap";
 import "bootstrap/scss/bootstrap.scss";
 
-const host = "localhost:50555";
+const host = "http://localhost:50555";
 
 $(document).ready(()=>{
   $("#client").attr("href", `client.html?host=${host}`);
@@ -17,7 +17,7 @@ $(document).ready(()=>{
 function doUpdate() {
   $("#socket_ids").empty();
   RxUtil.doSubscribe("get_socket_ids",
-    RxUtil.postJson(`http://${host}/debugger`, {
+    RxUtil.postJson(`${host}/debugger`, {
       command: "get_socket_ids"
     })
     .pipe(mergeMap((x)=>{
@@ -32,7 +32,7 @@ function doUpdate() {
         .on("click", ()=>{
           if(confirm("Are you sure you want to unbind this socket?")){
             RxUtil.doSubscribe("goodbye (bind server socket)",
-              RxUtil.postJson(`http://${host}/debugger`, {
+              RxUtil.postJson(`${host}/debugger`, {
                 command: "goodbye",
                 session_id: x.session_id
               })

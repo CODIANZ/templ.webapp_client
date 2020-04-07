@@ -18,7 +18,7 @@ $(document).ready(()=>{
     .attr("href", `server_socket.html?session_id=${session_id}&host=${host}`);
 
   $("#emit_unsolicited_message").on("click", ()=>{
-    RxUtil.doSubscribe("emit_unsolicited_message", RxUtil.postJson(`http://${host}/debugger`, {
+    RxUtil.doSubscribe("emit_unsolicited_message", RxUtil.postJson(`${host}/debugger`, {
       command: "emit_unsolicited_message",
       session_id: session_id,
       message: {
@@ -29,7 +29,7 @@ $(document).ready(()=>{
   });
 
   $("#emit_solicited_message").on("click", ()=>{
-    RxUtil.doSubscribe("emit_solicited_message", RxUtil.postJson(`http://${host}/debugger`, {
+    RxUtil.doSubscribe("emit_solicited_message", RxUtil.postJson(`${host}/debugger`, {
       command: "emit_solicited_message",
       session_id: session_id,
       message: {
@@ -44,7 +44,7 @@ $(document).ready(()=>{
   });
 
   $("#goodbye").on("click", ()=>{
-    RxUtil.doSubscribe("goodbye", RxUtil.postJson(`http://${host}/debugger`, {
+    RxUtil.doSubscribe("goodbye", RxUtil.postJson(`${host}/debugger`, {
       command: "goodbye",
       session_id: session_id
     }), log);
@@ -60,7 +60,7 @@ function log(s: string){
 function doUpdatePendingSolicitedMessages(){
   $(".list_item.template").nextAll().remove();
   RxUtil.doSubscribe("get_pending_solicited_messages",
-    RxUtil.postJson(`http://${host}/debugger`, {
+    RxUtil.postJson(`${host}/debugger`, {
       command: "get_pending_solicited_messages",
       session_id: session_id
     })
@@ -79,7 +79,7 @@ function doUpdatePendingSolicitedMessages(){
       $(".message.event", li).val(solicited_message_event);
       $(".message.body", li).val(JSON.stringify(solicited_message_body, null, 1));
       $(".emit", li).on("click", ()=>{
-        RxUtil.doSubscribe("emit_solicited_response", RxUtil.postJson(`http://${host}/debugger`, {
+        RxUtil.doSubscribe("emit_solicited_response", RxUtil.postJson(`${host}/debugger`, {
           command: "emit_solicited_response",
           session_id: session_id,
           message: {

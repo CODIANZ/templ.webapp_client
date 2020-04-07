@@ -26,7 +26,7 @@ $(document).ready(()=>{
   document.title = `server: ${session_id}`;
   
   g_socket.onUnsolicitedMessageRegex(".*", (event, body)=>{
-    log(`onUnsolicitedMessageRegex:\n  - event: ${event}\n  - body: ${JSON.stringify(body, null, 1)})`);
+    log(`onUnsolicitedMessageRegex:\n  - event: ${event}\n  - body: ${JSON.stringify(body, null, 1)}`);
   });
 
   g_socket.onSolcitedMessageRegex(".*", (index, event, body)=>{
